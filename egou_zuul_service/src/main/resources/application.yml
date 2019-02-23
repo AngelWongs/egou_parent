@@ -1,0 +1,18 @@
+server:
+  port: 9527
+spring:
+  application:
+    name: MICROSERVICE-ZUUL-GATEWAY
+eureka:
+  client:
+    service-url:
+      defaultZone: http://www.eureka-7001.com:7001/eureka
+  instance:
+    instance-id: gateway-9527.com #显示的名字而已
+    prefer-ip-address: true
+zuul:
+  routes:
+    egou.serviceId: employee-provider
+    egou.path: /employee/**
+  ignored-services: "*"
+  prefix: "/egou"

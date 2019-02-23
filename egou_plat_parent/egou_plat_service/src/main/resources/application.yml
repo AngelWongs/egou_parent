@@ -1,0 +1,10 @@
+
+server:
+  port: 8001
+spring:
+  application:
+    name: EMPLOYEE-PROVIDER
+eureka:
+  client:
+    service-url:
+      defaultZone: http://www.eureka-7001.com:7001/eureka

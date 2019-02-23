@@ -1,0 +1,10 @@
+eureka:
+  instance:
+    hostname:  www.eureka-7001.com #访问网址
+  client:
+    register-with-eureka: false #是否注册到服务中心
+    fetch-registry: false #表示是否从eureka service获取注册信息
+    service-url:
+      defaultZone: http://www.eureka-7001.com:7001/eureka/
+server:
+  port: 7001
