@@ -1,0 +1,19 @@
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://www.eureka-7001.com:7001/eureka/
+  instance:
+    prefer-ip-address: true
+spring:
+  application:
+    name: spring-cloud-config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/AngelWongs/egou_config.git
+          username: AngelWongs
+          password: 520131400Ll@
+server:
+  port: 1299
