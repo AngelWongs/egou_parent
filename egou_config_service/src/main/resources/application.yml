@@ -12,8 +12,8 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/AngelWongs/egou_config.git
-          username: AngelWongs
-          password: 520131400Ll@
+          uri: https://github.com/AngelWongs/egou_config.git #仓库地址
+#          username: AngelWongs
+#          password: 520131400Ll@
 server:
   port: 1299

@@ -19,8 +19,8 @@ spring:
       label: master #分支
       discovery:
         enabled: true #从eureka上面找配置服务
-        service-id: spring-cloud-config-server #指定服务名
-      #uri: http://127.0.0.1:1299 #配置服务器 单机配置
+        service-id: spring-cloud-config-server #指定服务名-->使用服务名eureka配置不能写在远程,通过配置中心找服务载拉配置文件
+      #uri: http://127.0.0.1:1299 #配置服务器 单机配置-->eureka配置可以写在远程
 eureka: #eureka不能放到远程配置中
   client:
     service-url:

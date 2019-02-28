@@ -8,6 +8,7 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 /**
  * Hello world!
  * 网关路由
+ * swagger:http://127.0.0.1:9527/swagger-ui.html
  */
 @SpringBootApplication
 @EnableEurekaClient

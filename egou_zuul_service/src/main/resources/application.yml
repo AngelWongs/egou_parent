@@ -12,7 +12,9 @@ eureka:
     prefer-ip-address: true
 zuul:
   routes:
-    egou.serviceId: employee-provider
-    egou.path: /employee/**
+    egouEmployee.serviceId: employee-provider
+    egouEmployee.path: /employee/**
+    egouProduct.serviceId: product-server
+    egouProduct.path: /product/**
   ignored-services: "*"
   prefix: "/egou"

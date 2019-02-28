@@ -14,6 +14,8 @@
         <module>egou_plat_parent</module>
         <module>egou_zuul_service</module>
         <module>egou_config_service</module>
+        <module>egou_product_parent</module>
+        <module>egou_mybatisplus_code_generate</module>
     </modules>
 
     <name>egou_plat_parent</name>

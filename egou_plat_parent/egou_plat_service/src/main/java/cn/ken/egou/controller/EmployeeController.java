@@ -1,7 +1,7 @@
 package cn.ken.egou.controller;
 
 import cn.ken.egou.domain.Employee;
-import cn.ken.egou.util.AjaxResult;
+import cn.ken.egou.utils.AjaxResult;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
