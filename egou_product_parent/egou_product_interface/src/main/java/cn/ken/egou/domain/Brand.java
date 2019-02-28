@@ -41,7 +41,7 @@ public class Brand extends Model<Brand> {
      * 商品分类ID
      */
     @TableField("product_type_id")
-    private Long productTypeId;
+    private ProductType productTypeId;
     private Integer sortIndex;
     /**
      * 品牌LOGO
@@ -105,11 +105,11 @@ public class Brand extends Model<Brand> {
         this.description = description;
     }
 
-    public Long getProductTypeId() {
+    public ProductType getProductTypeId() {
         return productTypeId;
     }
 
-    public void setProductTypeId(Long productTypeId) {
+    public void setProductTypeId(ProductType productTypeId) {
         this.productTypeId = productTypeId;
     }
 

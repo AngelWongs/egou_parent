@@ -3,6 +3,8 @@ package cn.ken.egou.service;
 import cn.ken.egou.domain.ProductType;
 import com.baomidou.mybatisplus.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 商品目录 服务类
@@ -12,5 +14,5 @@ import com.baomidou.mybatisplus.service.IService;
  * @since 2019-02-27
  */
 public interface IProductTypeService extends IService<ProductType> {
-
+    public List<ProductType> treeData();
 }

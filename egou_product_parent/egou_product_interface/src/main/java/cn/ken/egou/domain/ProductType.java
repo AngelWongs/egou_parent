@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -60,6 +62,37 @@ public class ProductType extends Model<ProductType> {
     @TableField("type_template_id")
     private Long typeTemplateId;
 
+    /**
+     * 老子
+     */
+    @TableField(exist = false)
+    private ProductType parent;
+
+    /**
+     * 儿子
+     */
+    @TableField(exist = false)
+    private List<ProductType> children=new ArrayList<>();
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public ProductType getParent() {
+        return parent;
+    }
+
+    public void setParent(ProductType parent) {
+        this.parent = parent;
+    }
+
+    public List<ProductType> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<ProductType> children) {
+        this.children = children;
+    }
 
     public Long getId() {
         return id;

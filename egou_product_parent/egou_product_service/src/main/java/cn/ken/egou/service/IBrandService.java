@@ -1,6 +1,8 @@
 package cn.ken.egou.service;
 
 import cn.ken.egou.domain.Brand;
+import cn.ken.egou.query.BrandQuery;
+import cn.ken.egou.utils.PageList;
 import com.baomidou.mybatisplus.service.IService;
 
 /**
@@ -12,5 +14,6 @@ import com.baomidou.mybatisplus.service.IService;
  * @since 2019-02-27
  */
 public interface IBrandService extends IService<Brand> {
+    public PageList<Brand> selectBrandPageList(BrandQuery query);
 
 }
