@@ -1,8 +1,8 @@
 package cn.ken.egou.controller;
 
+import cn.ken.egou.domain.ProductType;
 import cn.ken.egou.query.ProductTypeQuery;
 import cn.ken.egou.service.IProductTypeService;
-import cn.ken.egou.domain.ProductType;
 import cn.ken.egou.utils.AjaxResult;
 import cn.ken.egou.utils.PageList;
 import com.baomidou.mybatisplus.plugins.Page;

@@ -1,5 +1,6 @@
 package cn.ken.egou.service.impl;
 
+import cn.ken.egou.client.PageStaticClient;
 import cn.ken.egou.client.RedisClient;
 import cn.ken.egou.constant.GlobalConstant;
 import cn.ken.egou.domain.ProductType;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -33,6 +35,9 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
 
     @Autowired
     private RedisClient redisClient;
+    
+    @Autowired
+    private PageStaticClient pageStaticClient;
     /**
      * @return
      */
@@ -165,4 +170,46 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
         return productTypeMapper.selectList(wrapper);
     }
 
+    /**
+     * 插入数据时更新静态页面
+     * @param entity
+     * @return
+     */
+    @Override
+    public boolean insert(ProductType entity) {
+        //修改:本身数据的修改不会变;修改完后,重新生成模板:
+        //1:数据修改:
+        boolean b = super.insert(entity);
+
+        //2:模板的生成:此时此时,这个是模板的消费者:消费模板的提供者:
+        //这个是java后台内部的服务的消费:feign/ribbon(采纳feign)
+        //feign:注入模板接口,调用
+
+        //逻辑实现:
+        //2.1:先生成改变数据的html页面:productType
+        Map<String,Object> mapProductType=new HashMap<>();
+        List<ProductType> productTypes = treeDataLoop();
+        mapProductType.put(GlobalConstant.PAGE_MODE, productTypes);//这里页面需要的是所有的产品类型数据
+        //哪一个模板
+        mapProductType.put(GlobalConstant.PAGE_TEMPLATE, "G:\\devlop\\Java\\javacode\\javaEE\\egou_parent\\egou_common_parent\\egou_common_interface\\src\\main\\resources\\template\\product.type.vm");
+        //根据模板生成的页面的地址:
+        mapProductType.put(GlobalConstant.PAGE_TEMPLATE_HTML, "G:\\devlop\\Java\\javacode\\javaEE\\egou_parent\\egou_common_parent\\egou_common_interface\\src\\main\\resources\\template\\product.type.vm.html");
+
+        pageStaticClient.getPageStatic(mapProductType);
+
+//        //2.2:再生成home的html页面:
+//        Map<String,Object> mapHome=new HashMap<>();
+//        //数据:$model.staticRoot
+//        Map<String,String> staticRootMap=new HashMap<>();
+//        staticRootMap.put("staticRoot", "G:\\devlop\\Java\\javacode\\javaEE\\egou_parent\\egou_common_parent\\egou_common_interface\\src\\main\\resources\\");
+//        mapHome.put(GlobalConstant.PAGE_MODE, staticRootMap);//这里页面需要的是目录的根路径
+//        //哪一个模板
+//        mapHome.put(GlobalConstant.PAGE_TEMPLATE, "G:\\devlop\\Java\\javacode\\javaEE\\egou_parent\\egou_common_parent\\egou_common_interface\\src\\main\\resources\\template\\home.vm");
+//        //根据模板生成的页面的地址:
+//        mapHome.put(GlobalConstant.PAGE_TEMPLATE_HTML, "G:\\devlop\\Java\\javacode\\javaEE\\egou_parent\\egou_common_parent\\egou_common_interface\\src\\main\\resources\\template\\home.html");
+//
+//        pageStaticClient.getPageStatic(mapHome);
+
+        return b;
+    }
 }
