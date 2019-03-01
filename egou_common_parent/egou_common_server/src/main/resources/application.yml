@@ -1,0 +1,28 @@
+server:
+  port: 8003
+  tomcat:
+    max-http-header-size: 104857600
+spring:
+  application:
+    name: COMMON-PROVIDER
+eureka:
+  client:
+    service-url:
+      defaultZone: http://www.eureka-7001.com:7001/eureka
+  instance:
+    prefer-ip-address: true
+feign:
+  hystrix:
+    enabled: true #开启熔断支持
+  client:
+    config:
+      remote-service:           #服务名，填写default为所有服务
+        connectTimeout: 3000
+        readTimeout: 3000
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000

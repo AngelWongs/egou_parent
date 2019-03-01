@@ -11,10 +11,10 @@
         <result column="englishName" property="englishName"/>
         <result column="firstLetter" property="firstLetter"/>
         <result column="description" property="description"/>
-        <!--<result column="product_type_id" property="productTypeId"/>-->
+        <result column="product_type_id" property="productTypeId"/>
         <result column="sortIndex" property="sortIndex"/>
         <result column="logo" property="logo"/>
-        <association property="productTypeId"
+        <association property="productType"
                      select="cn.ken.egou.mapper.ProductTypeMapper.selectById"
                      column="product_type_id"
         />

@@ -27,7 +27,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
 
     @Override
     public PageList<Brand> selectBrandPageList(BrandQuery query) {
-        //柑橘条件查询所有数据
+        //柑橘条件查询所有数据-->分页在mapper.xml中
         List<Brand> brands = brandMapper.selectAllBrand(query);
         //根据数据查所有总数据条数
         Long aLong = brandMapper.selectAllBrandCount(query);

@@ -26,9 +26,15 @@ public class BrandController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public AjaxResult save(@RequestBody Brand brand) {
         try {
+            /**
+             * 修改
+             */
             if (brand.getId() != null) {
                 brandService.updateById(brand);
             } else {
+                /**
+                 * 新增
+                 */
                 brandService.insert(brand);
             }
             return AjaxResult.me();

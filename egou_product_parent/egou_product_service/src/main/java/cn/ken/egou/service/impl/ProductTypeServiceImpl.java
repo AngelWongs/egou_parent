@@ -1,18 +1,21 @@
 package cn.ken.egou.service.impl;
 
+import cn.ken.egou.client.RedisClient;
+import cn.ken.egou.constant.GlobalConstant;
 import cn.ken.egou.domain.ProductType;
 import cn.ken.egou.mapper.ProductTypeMapper;
 import cn.ken.egou.service.IProductTypeService;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -28,6 +31,8 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
     @Autowired
     private ProductTypeMapper productTypeMapper;
 
+    @Autowired
+    private RedisClient redisClient;
     /**
      * @return
      */
@@ -36,7 +41,21 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
         // 要得到name和儿子
 
 //        return treeDataRecursion(0L);
-        return treeDataLoop();
+//        return treeDataLoop();
+        //先去redis查询是否有数据
+         String jsonArrStr = redisClient.get(GlobalConstant.EGOU_PRODUCT_PROVIDER);
+         //判断在redis中能不能根据这个key拿到有用数据
+         if (jsonArrStr==null || StringUtils.isEmpty(jsonArrStr)){
+             //没有数据->取数据库查->存到redis->返回数据(数据库中获取treeData)
+             List<ProductType> productTypeList = treeDataLoop();
+             jsonArrStr = JSONObject.toJSONString(productTypeList);
+             redisClient.set(GlobalConstant.EGOU_PRODUCT_PROVIDER, jsonArrStr);
+             System.out.println("-----------db------------");
+         }
+        //有数据直接从redis返回数据
+        System.out.println("-----------redis------------");
+        List<ProductType> productTypeList = JSONObject.parseArray(jsonArrStr, ProductType.class);
+        return productTypeList;
     }
 
     /**
@@ -90,9 +109,17 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
                 parent.getChildren().add(productType);
             }
         }
+        return removeEmptyChildren(result);
+    }
+    private List<ProductType> removeEmptyChildren(List<ProductType> result){
+        if (result.size()<=0 || result==null){
+            return null;
+        }
+        for (ProductType productType : result) {
+            removeEmptyChildren(productType.getChildren());
+        }
         return result;
     }
-
     /**
      *
      * 查询无限极的树装数据:
@@ -110,7 +137,7 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
 
      递归:性能很差的,每次都要发送sql,会发送多条sql:怎么优化??????
      ====>问题是发了很多条sql才导致性能差,我发一条把所有的数据都拿回就好了
-     * @return
+     * @return 树结构
      */
     private List<ProductType> treeDataRecursion(Long pid) {
         //0   每次都要发送sql

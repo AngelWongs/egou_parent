@@ -14,7 +14,11 @@ zuul:
   routes:
     egouEmployee.serviceId: employee-provider
     egouEmployee.path: /employee/**
+
     egouProduct.serviceId: product-server
     egouProduct.path: /product/**
+
+    egouCommon.serviceId: common-provider
+    egouCommon.path: /common/**
   ignored-services: "*"
   prefix: "/egou"
