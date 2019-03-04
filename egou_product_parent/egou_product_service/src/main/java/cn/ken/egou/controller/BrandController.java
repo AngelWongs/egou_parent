@@ -95,4 +95,19 @@ public class BrandController {
 //        return new PageList<Brand>(page.getTotal(), page.getRecords());
         return brandService.selectBrandPageList(query);
     }
+
+    @RequestMapping(value = "/getProductTypeAllPid",method = RequestMethod.POST)
+    public AjaxResult getProductTypeAllPid(@RequestBody Brand brand){
+        //getProductTypeAllPid()方法
+        List<Long> productTypeAllPid = null;
+        try {
+            productTypeAllPid = brandService.getProductTypeAllPid(brand);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return AjaxResult.me().setSuccess(false).setMsg("获取pid失败").setObject(productTypeAllPid);
+        }
+        System.out.println(productTypeAllPid);
+        return AjaxResult.me().setObject(productTypeAllPid);
+    }
 }

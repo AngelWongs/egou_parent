@@ -35,6 +35,7 @@
         LIMIT #{start},
           #{rows}
     </select>
+    <!--根据条件查所有brand数-->
     <select id="selectAllBrandCount" parameterType="cn.ken.egou.query.BrandQuery" resultType="long">
         SELECT
         COUNT(*)

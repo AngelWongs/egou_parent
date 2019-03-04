@@ -23,5 +23,13 @@
     <sql id="Base_Column_List">
         id, createTime, updateTime, name, pid, logo, description, sortIndex, path, totalCount, seoTitle, seoKeywords, type_template_id AS typeTemplateId
     </sql>
+    <select id="getProductTypeByPid" resultMap="BaseResultMap" parameterType="long">
+        SELECT
+            *
+        FROM
+            t_product_type
+        WHERE
+            id = #{pid};
+    </select>
 
 </mapper>

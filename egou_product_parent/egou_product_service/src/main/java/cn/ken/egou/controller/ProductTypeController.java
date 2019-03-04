@@ -1,5 +1,6 @@
 package cn.ken.egou.controller;
 
+import cn.ken.egou.domain.Brand;
 import cn.ken.egou.domain.ProductType;
 import cn.ken.egou.query.ProductTypeQuery;
 import cn.ken.egou.service.IProductTypeService;
@@ -90,4 +91,5 @@ public class ProductTypeController {
         List<ProductType> productTypes = productTypeService.treeData();
         return productTypes;
     }
+
 }
