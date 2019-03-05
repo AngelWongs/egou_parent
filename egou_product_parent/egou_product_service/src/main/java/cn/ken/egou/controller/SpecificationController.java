@@ -1,8 +1,8 @@
 package cn.ken.egou.controller;
 
-import cn.ken.egou.query.ProductQuery;
-import cn.ken.egou.service.IProductService;
-import cn.ken.egou.domain.Product;
+import cn.ken.egou.query.SpecificationQuery;
+import cn.ken.egou.service.ISpecificationService;
+import cn.ken.egou.domain.Specification;
 import cn.ken.egou.utils.AjaxResult;
 import cn.ken.egou.utils.PageList;
 import com.baomidou.mybatisplus.plugins.Page;
@@ -12,23 +12,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/product")
-public class ProductController {
+@RequestMapping("/specification")
+public class SpecificationController {
     @Autowired
-    public IProductService productService;
+    public ISpecificationService specificationService;
 
     /**
     * 保存和修改公用的
-    * @param product  传递的实体
+    * @param specification  传递的实体
     * @return Ajaxresult转换结果
     */
     @RequestMapping(value="/save",method= RequestMethod.POST)
-    public AjaxResult save(@RequestBody Product product){
+    public AjaxResult save(@RequestBody Specification specification){
         try {
-            if(product.getId()!=null){
-                productService.updateById(product);
+            if(specification.getId()!=null){
+                specificationService.updateById(specification);
             }else{
-                productService.insert(product);
+                specificationService.insert(specification);
             }
             return AjaxResult.me();
         } catch (Exception e) {
@@ -45,7 +45,7 @@ public class ProductController {
     @RequestMapping(value="/{id}",method=RequestMethod.DELETE)
     public AjaxResult delete(@PathVariable("id") Long id){
         try {
-            productService.deleteById(id);
+            specificationService.deleteById(id);
             return AjaxResult.me();
         } catch (Exception e) {
         e.printStackTrace();
@@ -55,9 +55,9 @@ public class ProductController {
 
     //获取用户
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
-    public Product get(@PathVariable("id")Long id)
+    public Specification get(@PathVariable("id")Long id)
     {
-        return productService.selectById(id);
+        return specificationService.selectById(id);
     }
 
 
@@ -66,9 +66,9 @@ public class ProductController {
     * @return
     */
     @RequestMapping(value = "/list",method = RequestMethod.GET)
-    public List<Product> list(){
+    public List<Specification> list(){
 
-        return productService.selectList(null);
+        return specificationService.selectList(null);
     }
 
 
@@ -79,11 +79,10 @@ public class ProductController {
     * @return PageList 分页对象
     */
     @RequestMapping(value = "/json",method = RequestMethod.POST)
-    public PageList<Product> json(@RequestBody ProductQuery query)
+    public PageList<Specification> json(@RequestBody SpecificationQuery query)
     {
-//        Page<Product> page = new Page<Product>(query.getPage(),query.getRows());
-//            page = productService.selectPage(page);
-//            return new PageList<Product>(page.getTotal(),page.getRecords());
-        return productService.selectPageList(query);
+        Page<Specification> page = new Page<Specification>(query.getPage(),query.getRows());
+            page = specificationService.selectPage(page);
+            return new PageList<Specification>(page.getTotal(),page.getRecords());
     }
 }

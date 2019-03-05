@@ -1,8 +1,8 @@
 package cn.ken.egou.controller;
 
-import cn.ken.egou.query.ProductQuery;
-import cn.ken.egou.service.IProductService;
-import cn.ken.egou.domain.Product;
+import cn.ken.egou.query.ProductExtQuery;
+import cn.ken.egou.service.IProductExtService;
+import cn.ken.egou.domain.ProductExt;
 import cn.ken.egou.utils.AjaxResult;
 import cn.ken.egou.utils.PageList;
 import com.baomidou.mybatisplus.plugins.Page;
@@ -12,23 +12,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/product")
-public class ProductController {
+@RequestMapping("/productExt")
+public class ProductExtController {
     @Autowired
-    public IProductService productService;
+    public IProductExtService productExtService;
 
     /**
     * 保存和修改公用的
-    * @param product  传递的实体
+    * @param productExt  传递的实体
     * @return Ajaxresult转换结果
     */
     @RequestMapping(value="/save",method= RequestMethod.POST)
-    public AjaxResult save(@RequestBody Product product){
+    public AjaxResult save(@RequestBody ProductExt productExt){
         try {
-            if(product.getId()!=null){
-                productService.updateById(product);
+            if(productExt.getId()!=null){
+                productExtService.updateById(productExt);
             }else{
-                productService.insert(product);
+                productExtService.insert(productExt);
             }
             return AjaxResult.me();
         } catch (Exception e) {
@@ -45,7 +45,7 @@ public class ProductController {
     @RequestMapping(value="/{id}",method=RequestMethod.DELETE)
     public AjaxResult delete(@PathVariable("id") Long id){
         try {
-            productService.deleteById(id);
+            productExtService.deleteById(id);
             return AjaxResult.me();
         } catch (Exception e) {
         e.printStackTrace();
@@ -55,9 +55,9 @@ public class ProductController {
 
     //获取用户
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
-    public Product get(@PathVariable("id")Long id)
+    public ProductExt get(@PathVariable("id")Long id)
     {
-        return productService.selectById(id);
+        return productExtService.selectById(id);
     }
 
 
@@ -66,9 +66,9 @@ public class ProductController {
     * @return
     */
     @RequestMapping(value = "/list",method = RequestMethod.GET)
-    public List<Product> list(){
+    public List<ProductExt> list(){
 
-        return productService.selectList(null);
+        return productExtService.selectList(null);
     }
 
 
@@ -79,11 +79,10 @@ public class ProductController {
     * @return PageList 分页对象
     */
     @RequestMapping(value = "/json",method = RequestMethod.POST)
-    public PageList<Product> json(@RequestBody ProductQuery query)
+    public PageList<ProductExt> json(@RequestBody ProductExtQuery query)
     {
-//        Page<Product> page = new Page<Product>(query.getPage(),query.getRows());
-//            page = productService.selectPage(page);
-//            return new PageList<Product>(page.getTotal(),page.getRecords());
-        return productService.selectPageList(query);
+        Page<ProductExt> page = new Page<ProductExt>(query.getPage(),query.getRows());
+            page = productExtService.selectPage(page);
+            return new PageList<ProductExt>(page.getTotal(),page.getRecords());
     }
 }

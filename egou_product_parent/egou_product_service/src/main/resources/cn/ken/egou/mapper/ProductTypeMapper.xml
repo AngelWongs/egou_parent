@@ -31,5 +31,13 @@
         WHERE
             id = #{pid};
     </select>
+    <select id="productTypePidEcho" resultType="string" parameterType="long">
+        SELECT
+            t_product_type.path
+        FROM
+            t_product_type
+        WHERE
+            id = #{pid};
+    </select>
 
 </mapper>

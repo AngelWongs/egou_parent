@@ -20,4 +20,5 @@ public interface ProductTypeMapper extends BaseMapper<ProductType> {
      * @param pid
      */
     ProductType getProductTypeByPid(Long pid);
+    String productTypePidEcho(Long pid);
 }

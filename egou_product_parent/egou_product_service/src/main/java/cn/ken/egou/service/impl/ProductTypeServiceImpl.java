@@ -126,7 +126,7 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
         return result;
     }
     /**
-     *
+     *我的有问题
      * 查询无限极的树装数据:
      select * from t_product_type where pid= ?????
 

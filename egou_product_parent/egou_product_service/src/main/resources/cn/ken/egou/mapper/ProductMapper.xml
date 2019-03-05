@@ -26,7 +26,57 @@
         <result column="commonCommentCount" property="commonCommentCount" />
         <result column="badCommentCount" property="badCommentCount" />
     </resultMap>
+    <resultMap id="MultimeterResultMap" type="cn.ken.egou.domain.Product">
+        <id column="id" property="id" />
+        <result column="createTime" property="createTime" />
+        <result column="updateTime" property="updateTime" />
+        <result column="name" property="name" />
+        <result column="subName" property="subName" />
+        <result column="code" property="code" />
+        <result column="product_type_id" property="productTypeId" />
+        <result column="onSaleTime" property="onSaleTime" />
+        <result column="offSaleTime" property="offSaleTime" />
+        <result column="brandId" property="brandId" />
+        <result column="state" property="state" />
+        <result column="maxPrice" property="maxPrice" />
+        <result column="minPrice" property="minPrice" />
+        <result column="saleCount" property="saleCount" />
+        <result column="viewCount" property="viewCount" />
+        <result column="commentCount" property="commentCount" />
+        <result column="commentScore" property="commentScore" />
+        <result column="viewProperties" property="viewProperties" />
+        <result column="goodCommentCount" property="goodCommentCount" />
+        <result column="commonCommentCount" property="commonCommentCount" />
+        <result column="badCommentCount" property="badCommentCount" />
+        <association property="productType" column="product_type_id" javaType="cn.ken.egou.domain.ProductType">
+            <id column="ptid" property="id"></id>
+            <result property="name" column="ptname"></result>
+        </association>
+        <association property="productExt" column="peid" javaType="cn.ken.egou.domain.ProductExt">
+            <id column="peid" property="id"></id>
+            <result property="description" column="pedescription"></result>
+            <result property="richContent" column="perichContent"></result>
+        </association>
+    </resultMap>
 
+    <select id="selectPageList" resultMap="MultimeterResultMap" parameterType="cn.ken.egou.query.ProductQuery">
+        SELECT
+            p.*,pt.id ptid,pt.name ptname,pe.id peid,pe.description pedescription,pe.richContent perichContent
+        FROM
+            t_product p
+        LEFT JOIN t_product_type pt ON pt.id = p.product_type_id
+        LEFT JOIN t_product_ext pe ON p.id = pe.productId
+        LIMIT #{start},
+                  #{rows};
+    </select>
+    <select id="selectPageListCount" resultType="long">
+        SELECT
+            COUNT(*)
+        FROM
+            t_product p
+        LEFT JOIN t_product_type pt ON pt.id = p.product_type_id
+        LEFT JOIN t_product_ext pe ON p.id = pe.productId
+    </select>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, createTime, updateTime, name, subName, code, product_type_id AS productTypeId, onSaleTime, offSaleTime, brandId, state, maxPrice, minPrice, saleCount, viewCount, commentCount, commentScore, viewProperties, goodCommentCount, commonCommentCount, badCommentCount

@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -99,15 +100,26 @@ public class BrandController {
     @RequestMapping(value = "/getProductTypeAllPid",method = RequestMethod.POST)
     public AjaxResult getProductTypeAllPid(@RequestBody Brand brand){
         //getProductTypeAllPid()方法
-        List<Long> productTypeAllPid = null;
+//        List<Long> productTypeAllPid = null;
+//        try {
+//            productTypeAllPid = brandService.getProductTypeAllPid(brand);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return AjaxResult.me().setSuccess(false).setMsg("获取pid失败").setObject(productTypeAllPid);
+//        }
+//        System.out.println(productTypeAllPid);
+//        return AjaxResult.me().setObject(productTypeAllPid);
+        //getProductTypeAllPid()方法
+        int[] productTypeAllPid = null;
+        String string = null;
         try {
             productTypeAllPid = brandService.getProductTypeAllPid(brand);
-
         } catch (Exception e) {
             e.printStackTrace();
             return AjaxResult.me().setSuccess(false).setMsg("获取pid失败").setObject(productTypeAllPid);
         }
-        System.out.println(productTypeAllPid);
+        System.out.println(Arrays.toString(productTypeAllPid));
         return AjaxResult.me().setObject(productTypeAllPid);
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
@@ -47,9 +48,8 @@ public class AppTest {
         ProductType productType = new ProductType();
         productType.setPid(3L);
         brand.setProductType(productType);
-        List<Long> productTypeAllPid = brandService.getProductTypeAllPid(brand);
-        String string = JSONObject.toJSONString(productTypeAllPid);
-        System.out.println(string);
+        String[] productTypeAllPid = brandService.getProductTypeAllPid(brand);
+        System.out.println(Arrays.toString(productTypeAllPid));
 //        ProductType productType = new ProductType();
 //        productType.setPid(3L);
 //        System.out.println(brandService.getProductTypeAllPidData(productType));

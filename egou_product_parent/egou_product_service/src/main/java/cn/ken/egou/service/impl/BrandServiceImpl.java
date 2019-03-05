@@ -1,7 +1,6 @@
 package cn.ken.egou.service.impl;
 
 import cn.ken.egou.domain.Brand;
-import cn.ken.egou.domain.ProductType;
 import cn.ken.egou.mapper.BrandMapper;
 import cn.ken.egou.mapper.ProductTypeMapper;
 import cn.ken.egou.query.BrandQuery;
@@ -11,8 +10,6 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -50,29 +47,41 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
      * @param brand
      */
     @Override
-    public List<Long> getProductTypeAllPid(Brand brand) {
-//        brandMapper.getProductTypeByPid(brand);.
-        pidList.clear();
-        pidList.add(brand.getProductType().getId());
-        getProductTypeAllPidData(brand.getProductType());
-        Collections.reverse(pidList);
-        return pidList;
-    }
-    private static List<Long> pidList = new ArrayList<>();
+    public int[] getProductTypeAllPid(Brand brand) {
+//        brandMapper.getProductTypeByPid(brand);
+//        pidList.clear();
+//        pidList.add(brand.getProductType().getId());
+//        getProductTypeAllPidData(brand.getProductType());
+//        Collections.reverse(pidList);
+//        return null;
+        //优化下拉树 使用 path 字段
+        String s = productTypeMapper.productTypePidEcho(brand.getProductType().getId());
+        String[] split = s.substring(1).split("\\.");
+        int[] ints = new int[split.length];
+        for(int i=0;i<split.length;i++){
 
-    private String getProductTypeAllPidData(ProductType productType){
-//和数据库交互,得到当前节点记录
-        ProductType productType1 = productTypeMapper.selectById(productType.getPid());
-        if(productType1 != null){
-            String configName = productType1.getName()+"->";
-            pidList.add(productType1.getId());
-            //参数patrolConfigEntity.getConfigParentId()表示当前节点的父节点ID
-            String returnConfigName = getProductTypeAllPidData(productType1);
-            return configName+returnConfigName;
-        }else{
-            return "";
+            ints[i] = Integer.parseInt(split[i]);
+
         }
+//        Arrays.
+        return ints;
     }
+//    private static List<Long> pidList = new ArrayList<>();
+
+//    private String getProductTypeAllPidData(ProductType productType){
+////和数据库交互,得到当前节点记录 -->递归(回显下拉树)--优化
+//        ProductType productType1 = productTypeMapper.selectById(productType.getPid());
+//        if(productType1 != null){
+//            String configName = productType1.getName()+"->";
+//            pidList.add(productType1.getId());
+//            //参数patrolConfigEntity.getConfigParentId()表示当前节点的父节点ID
+//            String returnConfigName = getProductTypeAllPidData(productType1);
+//            return configName+returnConfigName;
+//        }else{
+//            return "";
+//        }
+//
+//    }
 //    public String getProductTypeAllPidData(ProductType productType){
 ////和数据库交互,得到当前节点记录
 //        ProductType productType1 = productTypeMapper.selectById(productType.getPid());

@@ -1,6 +1,8 @@
 package cn.ken.egou.service;
 
 import cn.ken.egou.domain.Product;
+import cn.ken.egou.query.ProductQuery;
+import cn.ken.egou.utils.PageList;
 import com.baomidou.mybatisplus.service.IService;
 
 /**
@@ -12,5 +14,5 @@ import com.baomidou.mybatisplus.service.IService;
  * @since 2019-02-27
  */
 public interface IProductService extends IService<Product> {
-
+    public PageList<Product> selectPageList(ProductQuery query);
 }

@@ -5,7 +5,10 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
+
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * <p>
@@ -41,14 +44,27 @@ public class Product extends Model<Product> {
      */
     @TableField("product_type_id")
     private Long productTypeId;
+    @TableField(exist = false)
+    private ProductType productType;
     /**
      * 上架时间
      */
     private Long onSaleTime;
     /**
+     * 上架时间转字符串
+     */
+    @TableField(exist = false)
+    private String onSaleTimeStr;
+    /**
      * 下架时间
      */
     private Long offSaleTime;
+    /**
+     * 下架时间转字符串
+     */
+    @TableField(exist = false)
+    private String offSaleTimeStr;
+
     private Long brandId;
     /**
      * 状态
@@ -85,7 +101,54 @@ public class Product extends Model<Product> {
     private Integer goodCommentCount;
     private Integer commonCommentCount;
     private Integer badCommentCount;
+    @TableField(exist = false)
+    private ProductExt productExt;
 
+    public ProductExt getProductExt() {
+        return productExt;
+    }
+
+    public void setProductExt(ProductExt productExt) {
+        this.productExt = productExt;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public ProductType getProductType() {
+        return productType;
+    }
+
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
+    }
+
+    public String getOnSaleTimeStr() {
+        if (offSaleTime==null || offSaleTime==0L){
+            return null;
+
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return simpleDateFormat.format(new Date(onSaleTime));
+    }
+
+    public void setOnSaleTimeStr(String onSaleTimeStr) {
+        this.onSaleTimeStr = onSaleTimeStr;
+    }
+
+    public String getOffSaleTimeStr() {
+        if (offSaleTime==null || offSaleTime==0L){
+            return null;
+
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return simpleDateFormat.format(new Date(offSaleTime));
+    }
+
+    public void setOffSaleTimeStr(String offSaleTimeStr) {
+        this.offSaleTimeStr = offSaleTimeStr;
+    }
 
     public Long getId() {
         return id;
@@ -263,27 +326,27 @@ public class Product extends Model<Product> {
     @Override
     public String toString() {
         return "Product{" +
-        ", id=" + id +
-        ", createTime=" + createTime +
-        ", updateTime=" + updateTime +
-        ", name=" + name +
-        ", subName=" + subName +
-        ", code=" + code +
-        ", productTypeId=" + productTypeId +
-        ", onSaleTime=" + onSaleTime +
-        ", offSaleTime=" + offSaleTime +
-        ", brandId=" + brandId +
-        ", state=" + state +
-        ", maxPrice=" + maxPrice +
-        ", minPrice=" + minPrice +
-        ", saleCount=" + saleCount +
-        ", viewCount=" + viewCount +
-        ", commentCount=" + commentCount +
-        ", commentScore=" + commentScore +
-        ", viewProperties=" + viewProperties +
-        ", goodCommentCount=" + goodCommentCount +
-        ", commonCommentCount=" + commonCommentCount +
-        ", badCommentCount=" + badCommentCount +
-        "}";
+                ", id=" + id +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", name=" + name +
+                ", subName=" + subName +
+                ", code=" + code +
+                ", productTypeId=" + productTypeId +
+                ", onSaleTime=" + onSaleTime +
+                ", offSaleTime=" + offSaleTime +
+                ", brandId=" + brandId +
+                ", state=" + state +
+                ", maxPrice=" + maxPrice +
+                ", minPrice=" + minPrice +
+                ", saleCount=" + saleCount +
+                ", viewCount=" + viewCount +
+                ", commentCount=" + commentCount +
+                ", commentScore=" + commentScore +
+                ", viewProperties=" + viewProperties +
+                ", goodCommentCount=" + goodCommentCount +
+                ", commonCommentCount=" + commonCommentCount +
+                ", badCommentCount=" + badCommentCount +
+                "}";
     }
 }
