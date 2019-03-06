@@ -59,7 +59,10 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         //添加商品扩展
         ProductExt productExt = entity.getProductExt();
         productExt.setProductId(entity.getId());
-        productExtService.updateById(productExt);
-        return b;
+        boolean productExtB = false;
+        if (productExt.getId()!=null){
+            productExtB = productExtService.updateById(productExt);
+        }
+        return b&&productExtB;
     }
 }

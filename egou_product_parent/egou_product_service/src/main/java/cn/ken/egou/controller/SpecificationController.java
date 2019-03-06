@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/specification")
 public class SpecificationController {
     @Autowired
-    public ISpecificationService specificationService;
+    private ISpecificationService specificationService;
 
     /**
     * 保存和修改公用的
@@ -85,4 +85,17 @@ public class SpecificationController {
             page = specificationService.selectPage(page);
             return new PageList<Specification>(page.getTotal(),page.getRecords());
     }
+
+    /**
+     * 查询当前产品类型的所有显示属性
+     * @param productTypeId
+     * @return
+     */
+    @RequestMapping(value = "/selectAllSpecificationByProductTypeId/{product_type_id}/{productId}",method = RequestMethod.GET)
+    public List<Specification> selectAllByProducttypeId(@PathVariable("product_type_id") Long productTypeId,
+                                                        @PathVariable("productId") Long productId){
+        List<Specification> specificationList = specificationService.selectAllByProducttypeId(productTypeId,productId);
+        return specificationList;
+    }
+
 }

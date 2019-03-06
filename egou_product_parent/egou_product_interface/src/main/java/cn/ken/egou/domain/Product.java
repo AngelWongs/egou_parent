@@ -125,7 +125,7 @@ public class Product extends Model<Product> {
     }
 
     public String getOnSaleTimeStr() {
-        if (offSaleTime==null || offSaleTime==0L){
+        if (onSaleTime==null || onSaleTime==0L){
             return null;
 
         }
@@ -140,7 +140,6 @@ public class Product extends Model<Product> {
     public String getOffSaleTimeStr() {
         if (offSaleTime==null || offSaleTime==0L){
             return null;
-
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return simpleDateFormat.format(new Date(offSaleTime));

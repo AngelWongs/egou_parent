@@ -48,7 +48,7 @@ public class AppTest {
         ProductType productType = new ProductType();
         productType.setPid(3L);
         brand.setProductType(productType);
-        String[] productTypeAllPid = brandService.getProductTypeAllPid(brand);
+        int[] productTypeAllPid = brandService.getProductTypeAllPid(brand);
         System.out.println(Arrays.toString(productTypeAllPid));
 //        ProductType productType = new ProductType();
 //        productType.setPid(3L);

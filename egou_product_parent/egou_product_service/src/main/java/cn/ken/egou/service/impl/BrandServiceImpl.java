@@ -59,9 +59,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
         String[] split = s.substring(1).split("\\.");
         int[] ints = new int[split.length];
         for(int i=0;i<split.length;i++){
-
             ints[i] = Integer.parseInt(split[i]);
-
         }
 //        Arrays.
         return ints;

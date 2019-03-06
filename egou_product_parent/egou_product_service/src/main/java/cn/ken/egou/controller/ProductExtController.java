@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/productExt")
@@ -84,5 +85,27 @@ public class ProductExtController {
         Page<ProductExt> page = new Page<ProductExt>(query.getPage(),query.getRows());
             page = productExtService.selectPage(page);
             return new PageList<ProductExt>(page.getTotal(),page.getRecords());
+    }
+
+    /**
+     * 根据productid添加/修改显示属性
+     * @param
+     */
+    @RequestMapping(value = "/saveSpecificationByProductTypeId",method = RequestMethod.POST)
+    public AjaxResult saveByProductTypeId(@RequestBody Map map){
+        //获取productId
+        String productId = map.get("productId").toString();
+        //获取去显示属性信息(list)
+        List displayProperties = (List) map.get("specificationByProductTypeId");
+        if (productId!=null && !productId.isEmpty() && displayProperties!=null){
+            try {
+                productExtService.saveByProductTypeId(new Long(productId),displayProperties);
+                return AjaxResult.me().setSuccess(true).setMsg("操作OK");
+            }catch (Exception e){
+
+            }
+        }
+
+        return AjaxResult.me().setSuccess(false).setMsg("操作false");
     }
 }

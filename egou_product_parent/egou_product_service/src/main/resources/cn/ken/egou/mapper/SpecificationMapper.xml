@@ -6,11 +6,30 @@
     <resultMap id="BaseResultMap" type="cn.ken.egou.domain.Specification">
         <id column="id" property="id" />
         <result column="specName" property="specName" />
+        <result column="product_Type_Id" property="productTypeId" />
+        <result column="type" property="type" />
+    </resultMap>
+
+    <!-- 查询映射结果 -->
+    <resultMap id="MyResultMap" type="cn.ken.egou.domain.Specification">
+        <id column="id" property="id" />
+        <result column="specName" property="specName" />
+        <result column="product_Type_Id" property="productTypeId" />
+        <result column="type" property="type" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, specName
+        id, specName, product_Type_Id AS productTypeId, type
     </sql>
+
+    <select id="selectAllByProducttypeId" parameterType="long" resultMap="MyResultMap">
+        SELECT
+            *
+        FROM
+            t_specification
+        WHERE
+            product_Type_Id = #{product_type_id} AND t_specification.type=1;
+    </select>
 
 </mapper>
