@@ -94,7 +94,16 @@ public class SpecificationController {
     @RequestMapping(value = "/selectAllSpecificationByProductTypeId/{product_type_id}/{productId}",method = RequestMethod.GET)
     public List<Specification> selectAllByProducttypeId(@PathVariable("product_type_id") Long productTypeId,
                                                         @PathVariable("productId") Long productId){
-        List<Specification> specificationList = specificationService.selectAllByProducttypeId(productTypeId,productId);
+        //1为显示属性
+        List<Specification> specificationList = specificationService.selectAllByProducttypeId(productTypeId,productId,1L);
+        return specificationList;
+    }
+
+
+    @RequestMapping(value = "/selectAllSKUSpecificationByProductTypeId/{product_type_id}",method = RequestMethod.GET)
+    public List<Specification> selectAllSKUByProductTypeId(@PathVariable("product_type_id") Long productTypeId){
+        //2为sku属性
+        List<Specification> specificationList = specificationService.selectAllSKUByProductTypeId(productTypeId,2L);
         return specificationList;
     }
 

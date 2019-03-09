@@ -5,6 +5,7 @@ import cn.ken.egou.service.IProductExtService;
 import cn.ken.egou.domain.ProductExt;
 import cn.ken.egou.utils.AjaxResult;
 import cn.ken.egou.utils.PageList;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.plugins.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -105,7 +106,38 @@ public class ProductExtController {
 
             }
         }
-
         return AjaxResult.me().setSuccess(false).setMsg("操作false");
+    }
+    //保存sku属性到到数据库  sku表/product_ext
+    /**
+    productId:61
+    selectAllSKUByProductTypeId:
+     [
+         {id=38, specName=颜色, productTypeId=197, type=true, value=null, skuValue=[红, 蓝]},
+         {id=39, specName=内存, productTypeId=197, type=true, value=null, skuValue=[4g, 6g]},
+         {id=40, specName=版本, productTypeId=197, type=true, value=null, skuValue=[1]}
+     ]
+    skuDatas:
+     [
+         {颜色=红, 内存=4g, 版本=1, price=4, availableStock=1},
+         {颜色=红, 内存=6g, 版本=1, price=6, availableStock=1},
+         {颜色=蓝, 内存=4g, 版本=1, price=4, availableStock=1},
+         {颜色=蓝, 内存=6g, 版本=1, price=6, availableStock=1}
+     ]
+
+     */
+    @RequestMapping(value = "/saveAllSKUSpecificationByProductTypeId",method = RequestMethod.POST)
+    public void saveAllSKUSpecificationByProductTypeId(@RequestBody Map map){
+        //获取productId
+        String productId = map.get("productId").toString();
+        System.out.println("productId:"+ productId);
+        //获取去skudata属性信息(list)
+        List<Map<String,Object>> selectAllSKUByProductTypeId = (List<Map<String,Object>>) map.get("selectAllSKUByProductTypeId");
+//        String selectAllSKUByProductTypeIdJson = JSONObject.toJSONString(selectAllSKUByProductTypeId);
+        System.out.println("selectAllSKUByProductTypeId:"+selectAllSKUByProductTypeId);
+        List<Map<String,Object>> skuDatas = (List<Map<String, Object>>) map.get("skuDatas");
+//        String skuDatasJson = JSONObject.toJSONString(skuDatas);
+        System.out.println("skuDatas:"+skuDatas);
+        productExtService.saveAllSKUByProductId(productId,selectAllSKUByProductTypeId,skuDatas);
     }
 }

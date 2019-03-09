@@ -23,13 +23,13 @@
         id, specName, product_Type_Id AS productTypeId, type
     </sql>
 
-    <select id="selectAllByProducttypeId" parameterType="long" resultMap="MyResultMap">
+    <select id="selectAllByProducttypeId" resultMap="MyResultMap">
         SELECT
             *
         FROM
             t_specification
         WHERE
-            product_Type_Id = #{product_type_id} AND t_specification.type=1;
+            type=#{type} AND product_Type_Id = #{product_type_id};
     </select>
 
 </mapper>

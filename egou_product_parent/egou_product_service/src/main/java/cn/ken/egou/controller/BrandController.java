@@ -5,7 +5,6 @@ import cn.ken.egou.service.IBrandService;
 import cn.ken.egou.domain.Brand;
 import cn.ken.egou.utils.AjaxResult;
 import cn.ken.egou.utils.PageList;
-import com.baomidou.mybatisplus.plugins.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

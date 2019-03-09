@@ -29,7 +29,7 @@ public class SpecificationServiceImpl extends ServiceImpl<SpecificationMapper, S
     @Autowired
     private IProductExtService productExtService;
     @Override
-    public List<Specification> selectAllByProducttypeId(Long product_type_id,Long productId) {
+    public List<Specification> selectAllByProducttypeId(Long product_type_id,Long productId,Long type) {
         //数据库中没有显示属性值,有就是编辑,需要返回显示值信息
         //没有显示信息值不需要回显
         Wrapper wrapper = new EntityWrapper();
@@ -39,6 +39,12 @@ public class SpecificationServiceImpl extends ServiceImpl<SpecificationMapper, S
             String viewProperties = productExt.getViewProperties();
             return JSONObject.parseArray(viewProperties, Specification.class);
         }
-        return specificationMapper.selectAllByProducttypeId(product_type_id);
+        return specificationMapper.selectAllByProducttypeId(product_type_id,type);
+    }
+
+    @Override
+    public List<Specification> selectAllSKUByProductTypeId(Long productTypeId, Long type) {
+
+        return specificationMapper.selectAllByProducttypeId(productTypeId,type);
     }
 }

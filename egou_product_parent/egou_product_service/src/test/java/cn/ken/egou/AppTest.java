@@ -4,7 +4,6 @@ import cn.ken.egou.domain.Brand;
 import cn.ken.egou.domain.ProductType;
 import cn.ken.egou.mapper.ProductTypeMapper;
 import cn.ken.egou.service.impl.BrandServiceImpl;
-import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 

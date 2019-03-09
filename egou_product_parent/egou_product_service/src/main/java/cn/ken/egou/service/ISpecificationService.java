@@ -14,5 +14,7 @@ import java.util.List;
  * @since 2019-03-05
  */
 public interface ISpecificationService extends IService<Specification> {
-    public List<Specification> selectAllByProducttypeId(Long product_type_id,Long productId);
+    public List<Specification> selectAllByProducttypeId(Long product_type_id,Long productId,Long type);
+
+    List<Specification> selectAllSKUByProductTypeId(Long productTypeId, Long type);
 }

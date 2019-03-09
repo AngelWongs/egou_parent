@@ -4,6 +4,7 @@ import cn.ken.egou.domain.ProductExt;
 import com.baomidou.mybatisplus.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -15,4 +16,6 @@ import java.util.List;
  */
 public interface IProductExtService extends IService<ProductExt> {
     public void saveByProductTypeId (Long productId, List displayProperties);
+
+    void saveAllSKUByProductId(String productId,List<Map<String,Object>> selectAllSKUByProductTypeId,List<Map<String,Object>> skuDatas);
 }

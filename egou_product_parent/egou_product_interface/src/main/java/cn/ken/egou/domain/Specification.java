@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -35,6 +37,15 @@ public class Specification extends Model<Specification> {
     private Boolean type;
 
     private String value;
+    private List<Specification> skuValue = new ArrayList<>();
+
+    public List<Specification> getSkuValue() {
+        return skuValue;
+    }
+
+    public void setSkuValue(List<Specification> skuValue) {
+        this.skuValue = skuValue;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
