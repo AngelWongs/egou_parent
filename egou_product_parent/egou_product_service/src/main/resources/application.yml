@@ -15,6 +15,10 @@ spring:
         enabled: true #是否开启开发者工具（true/false） #additional-paths: src/main/java exclude: static/**,WEB-INF/view/**
     restart:
       additional-paths: src/main/java
+  data:
+    elasticsearch:
+      cluster-name: elasticsearch
+      cluster-nodes: 127.0.0.1:9300 #java的客户端要用9300 服务器地址
 mybatis-plus:
   type-aliases-package: cn.ken.egou.domain
 eureka:

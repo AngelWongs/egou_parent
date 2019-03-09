@@ -104,6 +104,17 @@ public class Product extends Model<Product> {
     @TableField(exist = false)
     private ProductExt productExt;
 
+    // 1111,3333,5555
+    private String medias;
+
+    public String getMedias() {
+        return medias;
+    }
+
+    public void setMedias(String medias) {
+        this.medias = medias;
+    }
+
     public ProductExt getProductExt() {
         return productExt;
     }

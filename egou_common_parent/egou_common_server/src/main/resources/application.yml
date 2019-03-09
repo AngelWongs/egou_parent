@@ -5,6 +5,10 @@ server:
 spring:
   application:
     name: COMMON-PROVIDER
+  data:
+    elasticsearch:
+      cluster-nodes: 127.0.0.1:9300
+      cluster-name: elasticsearch
 eureka:
   client:
     service-url:

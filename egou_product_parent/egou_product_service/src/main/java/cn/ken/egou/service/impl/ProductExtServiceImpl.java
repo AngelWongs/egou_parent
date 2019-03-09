@@ -152,8 +152,6 @@ public class ProductExtServiceImpl extends ServiceImpl<ProductExtMapper, Product
 
             //sku的保存:在前面都是在构造这个sku的各个字段值
             skuService.insert(sku);
-
-
         }
 
     }

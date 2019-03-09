@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/product")
@@ -86,5 +87,37 @@ public class ProductController {
 //            page = productService.selectPage(page);
 //            return new PageList<Product>(page.getTotal(),page.getRecords());
         return productService.selectPageList(query);
+    }
+
+    /**
+     * 上下架的操作
+     *
+     * @param map ids:操作的id   1,2,3    ;  optType:1 上架请求   2下架请求
+     * @return
+     */
+    @RequestMapping(value = "/productSale", method = RequestMethod.POST)
+    public AjaxResult productSale(@RequestBody Map<String, Object> map) {
+        Object ids1 = map.get("ids");
+        Object optType = map.get("optType");
+        if (ids1 != null && optType != null) {
+            try {
+                String ids = ids1.toString();
+                Long opt = Long.valueOf(optType.toString());
+                if (opt == 1) {
+                    productService.onSale(ids,opt);
+                } else if (opt == 2) {
+                    productService.offSale(ids,opt);
+                }
+
+                return AjaxResult.me().setSuccess(true).setMsg("上下架成功");
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                return AjaxResult.me().setSuccess(false).setMsg("上下架失败");
+            }
+
+        } else {
+            return AjaxResult.me().setSuccess(false).setMsg("请传入正确请求参数");
+        }
+
     }
 }

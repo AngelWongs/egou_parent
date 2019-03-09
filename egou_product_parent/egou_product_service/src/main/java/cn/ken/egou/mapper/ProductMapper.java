@@ -5,6 +5,7 @@ import cn.ken.egou.query.ProductQuery;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -21,4 +22,9 @@ public interface ProductMapper extends BaseMapper<Product> {
      */
     public List<Product> selectPageList(ProductQuery query);
     public Long selectPageListCount();
+
+    //ids 和上架时间
+    void updateOnSaleBatch(Map<String,Object> params);
+
+    void updateOffSaleBatch(Map<String, Object> params);
 }

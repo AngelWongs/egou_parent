@@ -82,4 +82,27 @@
         id, createTime, updateTime, name, subName, code, product_type_id AS productTypeId, onSaleTime, offSaleTime, brandId, state, maxPrice, minPrice, saleCount, viewCount, commentCount, commentScore, viewProperties, goodCommentCount, commonCommentCount, badCommentCount
     </sql>
 
+    <!--
+/*(5,6)*/
+void updateOnSaleBatch(Map<String,Object> params);-->
+    <update id="updateOnSaleBatch" parameterType="map">
+
+        update  t_product t set  t.onSaleTime=#{onSaleTime} ,t.state = 1
+        where id in
+        <foreach collection="ids" item="m" separator="," close=")" open="(" >
+            #{m}
+        </foreach>
+
+    </update>
+
+    <update id="updateOffSaleBatch" parameterType="map">
+
+        update  t_product t set  t.offSaleTime=#{offSaleTime} ,t.state = 2
+        where id in
+        <foreach collection="ids" item="m" separator="," close=")" open="(" >
+            #{m}
+        </foreach>
+
+    </update>
+
 </mapper>
