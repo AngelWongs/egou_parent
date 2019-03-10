@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/productType")
@@ -90,6 +91,12 @@ public class ProductTypeController {
     public List<ProductType> treeData(){
         List<ProductType> productTypes = productTypeService.treeData();
         return productTypes;
+    }
+
+    //查询面包屑展示  查自己的同级别使用数据库path字段
+    @RequestMapping(value = "/Crumbs/{productTypeId}",method = RequestMethod.GET)
+    public List<Map<String,Object>> getCrumbs(@PathVariable("productTypeId") Long productTypeId){
+        return productTypeService.getCrumbs(productTypeId);
     }
 
 }

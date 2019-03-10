@@ -140,4 +140,6 @@ public class ProductExtController {
         System.out.println("skuDatas:"+skuDatas);
         productExtService.saveAllSKUByProductId(productId,selectAllSKUByProductTypeId,skuDatas);
     }
+
+
 }

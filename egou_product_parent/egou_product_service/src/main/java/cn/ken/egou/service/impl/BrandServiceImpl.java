@@ -6,6 +6,7 @@ import cn.ken.egou.mapper.ProductTypeMapper;
 import cn.ken.egou.query.BrandQuery;
 import cn.ken.egou.service.IBrandService;
 import cn.ken.egou.utils.PageList;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
     private BrandMapper brandMapper;
     @Autowired
     private ProductTypeMapper productTypeMapper;
+
     @Override
     public PageList<Brand> selectBrandPageList(BrandQuery query) {
         //柑橘条件查询所有数据-->分页在mapper.xml中
@@ -34,7 +36,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
         //根据数据查所有总数据条数
         Long aLong = brandMapper.selectAllBrandCount(query);
         long brandSize = brands.size();
-        if (brandSize > 0){
+        if (brandSize > 0) {
             //有数据返回
             PageList<Brand> brandPageList = new PageList<>(aLong.longValue(), brands);
             return brandPageList;
@@ -44,6 +46,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
 
     /**
      * 递归查出所有父亲
+     *
      * @param brand
      */
     @Override
@@ -58,12 +61,14 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
         String s = productTypeMapper.productTypePidEcho(brand.getProductType().getId());
         String[] split = s.substring(1).split("\\.");
         int[] ints = new int[split.length];
-        for(int i=0;i<split.length;i++){
+        for (int i = 0; i < split.length; i++) {
             ints[i] = Integer.parseInt(split[i]);
         }
 //        Arrays.
         return ints;
     }
+
+
 //    private static List<Long> pidList = new ArrayList<>();
 
 //    private String getProductTypeAllPidData(ProductType productType){
@@ -94,4 +99,14 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
 //        }
 //    }
 
+    /**
+     * 跟据productTypeId拿到下面的所有品牌
+     * @param productTypeId
+     * @return
+     */
+    @Override
+    public List<Brand> getBrandsByProducTypeId(Long productTypeId) {
+        EntityWrapper<Brand> brandEntityWrapper = new EntityWrapper<>();
+        return brandMapper.selectList(brandEntityWrapper.eq("product_type_id", productTypeId));
+    }
 }

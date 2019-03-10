@@ -4,6 +4,7 @@ import cn.ken.egou.domain.ProductType;
 import com.baomidou.mybatisplus.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -15,4 +16,6 @@ import java.util.List;
  */
 public interface IProductTypeService extends IService<ProductType> {
     public List<ProductType> treeData();
+
+    List<Map<String, Object>> getCrumbs(Long productTypeId);
 }

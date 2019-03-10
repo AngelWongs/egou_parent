@@ -4,10 +4,12 @@ import cn.ken.egou.client.ProductEsClient;
 import cn.ken.egou.doc.ProductDoc;
 import cn.ken.egou.service.IProductEsService;
 import cn.ken.egou.utils.AjaxResult;
+import cn.ken.egou.utils.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 //可以不实现接口:实现的目的:只是起一个约束的问题
 @RestController
@@ -77,6 +79,13 @@ public class ProductEsController implements ProductEsClient {
             e.printStackTrace();
             return AjaxResult.me().setSuccess(false).setObject(null).setMsg("查询失败");
         }
+    }
+    //高级查询  /common/es/queryProducts  /common/es/queryProducts
+    @RequestMapping(value = "/queryProducts", method = RequestMethod.POST)
+    @Override
+    public PageList<ProductDoc> queryProducts(@RequestBody Map<String, Object> params) {
+        //
+        return productEsService.queryProducts(params);
     }
 }
 

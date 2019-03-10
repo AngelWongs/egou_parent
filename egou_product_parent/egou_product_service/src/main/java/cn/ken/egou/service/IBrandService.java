@@ -5,6 +5,8 @@ import cn.ken.egou.query.BrandQuery;
 import cn.ken.egou.utils.PageList;
 import com.baomidou.mybatisplus.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 品牌信息 服务类
@@ -17,4 +19,5 @@ public interface IBrandService extends IService<Brand> {
     public PageList<Brand> selectBrandPageList(BrandQuery query);
     public int[] getProductTypeAllPid(Brand brand);
 
+    List<Brand> getBrandsByProducTypeId(Long productTypeId);
 }

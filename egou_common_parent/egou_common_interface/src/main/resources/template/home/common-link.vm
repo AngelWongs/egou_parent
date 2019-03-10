@@ -32,7 +32,7 @@
 				// 清除记录
 				$(".SZY-SEARCH-BOX-HELPER .clear").click(function() {
 					var url = '/search/clear-record.html';
-					$.post(url, {}, function(result) {
+					$.post(url, function(result) {
 						if(result.code == 0) {
 							$(".history-results .active").empty();
 						} else {}

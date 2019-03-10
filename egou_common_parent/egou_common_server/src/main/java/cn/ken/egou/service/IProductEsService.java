@@ -2,8 +2,10 @@ package cn.ken.egou.service;
 
 
 import cn.ken.egou.doc.ProductDoc;
+import cn.ken.egou.utils.PageList;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IProductEsService {
 
@@ -21,4 +23,6 @@ public interface IProductEsService {
 
     //查询一个
     ProductDoc findOne(Long id);
+
+    PageList<ProductDoc> queryProducts(Map<String,Object> params);
 }

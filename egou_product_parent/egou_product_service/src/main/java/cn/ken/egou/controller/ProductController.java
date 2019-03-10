@@ -1,5 +1,6 @@
 package cn.ken.egou.controller;
 
+import cn.ken.egou.doc.ProductDoc;
 import cn.ken.egou.query.ProductQuery;
 import cn.ken.egou.service.IProductService;
 import cn.ken.egou.domain.Product;
@@ -118,6 +119,28 @@ public class ProductController {
         } else {
             return AjaxResult.me().setSuccess(false).setMsg("请传入正确请求参数");
         }
+
+    }
+
+    //商品高级查询:"/product/product/queryProducts",this.queryParams)
+
+    /**
+     * 品牌,分类,价格:最高价和最低价,排序的字段,和排序的方式,查询关键字
+     "keyword":'',
+     "productType":null,
+     "brandId":null,
+     "priceMin":null,
+     "priceMax":null,
+     "sortField":'',
+     "sortType":"desc",
+     "page":1,
+     "rows":12
+     * @param parmas
+     */
+    @RequestMapping(value = "/queryProducts",method = RequestMethod.POST)
+    public PageList<ProductDoc>  queryProductFromEs(@RequestBody Map<String,Object> parmas){
+        //调用es的查询
+        return   productService.queryProductFromEs(parmas);
 
     }
 }

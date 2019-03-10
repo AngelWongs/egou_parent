@@ -208,6 +208,11 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         updateOffSaleBatch(idlist);
         //4:调用es的服务,传入各个id,删除
         productEsClient.deleteBatch(idlist);
+    }
 
+    @Override
+    public PageList<ProductDoc> queryProductFromEs(Map<String, Object> parmas) {
+        //调用es的接口进行
+        return productEsClient.queryProducts(parmas);
     }
 }

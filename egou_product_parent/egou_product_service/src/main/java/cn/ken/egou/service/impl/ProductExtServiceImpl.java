@@ -156,6 +156,7 @@ public class ProductExtServiceImpl extends ServiceImpl<ProductExtMapper, Product
 
     }
 
+
     /**
      * {"id":38,"value":"蓝","key":"颜色"}
      * @param proId         属性的id   38
@@ -207,4 +208,7 @@ public class ProductExtServiceImpl extends ServiceImpl<ProductExtMapper, Product
         }
         return null;
     }
+
+
+
 }

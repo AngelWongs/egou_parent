@@ -6,6 +6,7 @@ import cn.ken.egou.constant.GlobalConstant;
 import cn.ken.egou.domain.ProductType;
 import cn.ken.egou.mapper.ProductTypeMapper;
 import cn.ken.egou.service.IProductTypeService;
+import cn.ken.egou.utils.StrUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
@@ -176,10 +177,10 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
      * @return
      */
     @Override
-    public boolean insert(ProductType entity) {
+    public boolean updateById(ProductType entity) {
         //修改:本身数据的修改不会变;修改完后,重新生成模板:
         //1:数据修改:
-        boolean b = super.insert(entity);
+        boolean b = super.updateById(entity);
 
         //2:模板的生成:此时此时,这个是模板的消费者:消费模板的提供者:
         //这个是java后台内部的服务的消费:feign/ribbon(采纳feign)
@@ -194,22 +195,51 @@ public class ProductTypeServiceImpl extends ServiceImpl<ProductTypeMapper, Produ
         mapProductType.put(GlobalConstant.PAGE_TEMPLATE, "G:\\devlop\\Java\\javacode\\javaEE\\egou_parent\\egou_common_parent\\egou_common_interface\\src\\main\\resources\\template\\product.type.vm");
         //根据模板生成的页面的地址:
         mapProductType.put(GlobalConstant.PAGE_TEMPLATE_HTML, "G:\\devlop\\Java\\javacode\\javaEE\\egou_parent\\egou_common_parent\\egou_common_interface\\src\\main\\resources\\template\\product.type.vm.html");
-
         pageStaticClient.getPageStatic(mapProductType);
+        //2.2:再生成home的html页面:
+        Map<String,Object> mapHome=new HashMap<>();
+        //数据:$model.staticRoot
+        Map<String,String> staticRootMap=new HashMap<>();
+        staticRootMap.put("staticRoot", "G:\\devlop\\Java\\javacode\\javaEE\\egou_parent\\egou_common_parent\\egou_common_interface\\src\\main\\resources\\");
+        mapHome.put(GlobalConstant.PAGE_MODE, staticRootMap);//这里页面需要的是目录的根路径
+        //哪一个模板
+        mapHome.put(GlobalConstant.PAGE_TEMPLATE, "G:\\devlop\\Java\\javacode\\javaEE\\egou_parent\\egou_common_parent\\egou_common_interface\\src\\main\\resources\\template\\home.vm.ban");
+        //根据模板生成的页面的地址:
+        mapHome.put(GlobalConstant.PAGE_TEMPLATE_HTML, "G:\\devlop\\Java\\javacode\\javaEE\\egou_parent\\egou_common_parent\\egou_common_interface\\src\\main\\resources\\template\\home.vm.html");
 
-//        //2.2:再生成home的html页面:
-//        Map<String,Object> mapHome=new HashMap<>();
-//        //数据:$model.staticRoot
-//        Map<String,String> staticRootMap=new HashMap<>();
-//        staticRootMap.put("staticRoot", "G:\\devlop\\Java\\javacode\\javaEE\\egou_parent\\egou_common_parent\\egou_common_interface\\src\\main\\resources\\");
-//        mapHome.put(GlobalConstant.PAGE_MODE, staticRootMap);//这里页面需要的是目录的根路径
-//        //哪一个模板
-//        mapHome.put(GlobalConstant.PAGE_TEMPLATE, "G:\\devlop\\Java\\javacode\\javaEE\\egou_parent\\egou_common_parent\\egou_common_interface\\src\\main\\resources\\template\\home.vm");
-//        //根据模板生成的页面的地址:
-//        mapHome.put(GlobalConstant.PAGE_TEMPLATE_HTML, "G:\\devlop\\Java\\javacode\\javaEE\\egou_parent\\egou_common_parent\\egou_common_interface\\src\\main\\resources\\template\\home.html");
-//
-//        pageStaticClient.getPageStatic(mapHome);
+        pageStaticClient.getPageStatic(mapHome);
 
         return b;
+    }
+
+    /**
+     * 根据productId找到所有层级关系的同级producttype
+     * @param productTypeId
+     */
+    @Override
+    public List<Map<String, Object>> getCrumbs(Long productTypeId) {
+        ProductType productType = productTypeMapper.selectById(productTypeId);
+        //.1.2.3.
+        String path = productType.getPath();
+        path = path.substring(1);
+        String[] strings = StrUtils.splitStr2StrArr(path, "\\.");
+        //存放每一级遍历的兄弟姐妹和自己
+        List<Map<String, Object>> mapList = new ArrayList<>();
+        for (int i = 0; i < strings.length; i++) {
+            HashMap<String, Object> objectObjectHashMap = new HashMap<>();
+            //.1.2.3.
+            //获得自己
+            ProductType self = productTypeMapper.selectById(strings[i]);
+            Wrapper<ProductType> productTypeWrapper = new EntityWrapper<>();
+            productTypeWrapper.eq("pid", self.getPid());
+            List<ProductType> otherProductTypeList = productTypeMapper.selectList(productTypeWrapper);
+            //在所有中移除自己
+            otherProductTypeList.remove(self);
+            objectObjectHashMap.put("selfProductType", self);
+            objectObjectHashMap.put("otherProductType", otherProductTypeList);
+            mapList.add(objectObjectHashMap);
+        }
+        return mapList;
+
     }
 }

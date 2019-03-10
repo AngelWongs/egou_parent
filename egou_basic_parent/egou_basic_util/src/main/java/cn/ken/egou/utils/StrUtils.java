@@ -1,6 +1,7 @@
 package cn.ken.egou.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -16,6 +17,13 @@ public class StrUtils {
     public static String[] splitStr2StrArr(String str) {
         if (str != null && !str.equals("")) {
             return str.split(",");
+        }
+        return null;
+    }
+
+    public static String[] splitStr2StrArr(String str, String splice) {
+        if (str != null && !str.equals("")) {
+            return str.split(splice);
         }
         return null;
     }
@@ -73,4 +81,8 @@ public class StrUtils {
         return sBuilder.toString();
     }
 
+//    public static void main(String[] args) {
+//        String splic = ".1.2.3.";
+//        System.out.println(Arrays.toString(splitStr2StrArr(splic, "\\.")));
+//    }
 }
