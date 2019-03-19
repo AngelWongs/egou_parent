@@ -124,7 +124,6 @@ public class BrandController {
 
     @RequestMapping(value = "/brands/{productTypeId}",method = RequestMethod.GET)
     public List<Brand> getBrandsByProducTypeId(@PathVariable("productTypeId") Long productTypeId){
-
         return brandService.getBrandsByProducTypeId(productTypeId);
     }
 }
